@@ -1,14 +1,16 @@
-<a href="/songs/new">Post a song!</a>
 <p></p>
-<% @songs.each do |song| %>
-  <div class="song">
-    <h3><a href="/songs/<%= song.id %>"><%= song.author %></a></h3>
-    <p>
-      <%= song.title %>
-    </p>
-    <% if !song.url.nil? %>
-      <p><a href="<%= song.url %>"><%= song.url %></a></p>
-    <% end %>
-    <h6>Posted: <%= song.created_at %></h6>
-  </div>
-<% end %>
+
+<div class="container">
+  <% @songs.each do |song| %>
+    <div class="song">
+      <h3><a href="/songs/<%= song.id %>"><%= song.author %></a></h3>
+      <p>
+        <%= song.title %>
+      </p>
+      <% if !song.url.nil? %>
+        <p><a href="<%= song.url %>"><%= song.url %></a></p>
+      <% end %>
+      <h6>Posted: <%= song.created_at %></h6>
+    </div>
+  <% end %>
+</div>

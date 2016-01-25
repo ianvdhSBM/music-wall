@@ -1,5 +1,8 @@
-<h1>Post a Song</h1>
-<hr/>
+
+<div class="container"> 
+  <h1>Post a new song</h1>
+  <hr/>
+</div>
 
 <% if @song && @song.errors.any? %>
   <div>
@@ -12,20 +15,22 @@
   </div>
 <% end %>
 
-<form method="post" action="/songs">
-  <div>
-    <label>Author:</label>
-    <input type="text" name="author" value="<%= @song.author %>">
-  </div>
-  <div>
-    <label>Title:</label>
-    <input type="text" name="title" value="<%= @song.title %>">
-  </div>
-  <div>
-    <label>Link:</label>
-    <input type="text" name="url" value="<%= @song.url %>">
-  </div>
-  <div>
-    <input type="submit" value="Post!">
-  </div>
-</form>
+<div class="container"> 
+  <form method="post" action="/songs">
+    <div class="form-group">
+      <label>Author</label>
+      <input type="text" class="form-control" name="author" value="<%= @song.author %>" placeholder="Author">
+    </div>
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" class="form-control" name="title" value="<%= @song.title %>" placeholder="Song Title">
+    </div>
+    <div class="form-group" >
+      <label>Link:</label>
+      <input type="text" class="form-control" name="url" value="<%= @song.url %>" placeholder="website url">
+    </div>
+    <div>
+      <input class="btn btn-default" type="submit" value="Post!">
+    </div>
+  </form>
+</div>

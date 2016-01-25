@@ -4,7 +4,7 @@ class Song < ActiveRecord::Base
     presence: true,
     length: { maximum: 50 }
 
-    validates :title,
+    validates :author,
     presence: true,
     length: { maximum: 50 }
 

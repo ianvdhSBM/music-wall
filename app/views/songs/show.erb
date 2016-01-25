@@ -1,29 +1,33 @@
-<h1>Author: <%= @song.author %></h1>
 
-<% if !@song.created_at.nil? %>
+<div class="container">
+  <h1>Author: <%= @song.author %></h1>
+
   <h6><%= @song.created_at %></h6>
-<% end %>
+  
+  <h4>
+    <%= @song.title %> 
+  </h4>
 
-<p>
-  <%= @song.title %> 
-</p>
-
-<% if !@song.url.nil? %>
-  <p><a href="<%= @song.url %>"><%= @song.url %></a></p>
-<% end %>
-
-<div>
-  <% if !@songs_from_user.empty? %>
-    <h4>Other songs from this artist</h4>
-      <% @songs_from_user.each do |song| %>
-        <p><%= song.title %></p>
-        <% if !song.url.nil? %>
-          <p><a href="<%= song.url %>"><%= song.url %></a></p>
-        <% end %>
-        <h6>Posted: <%= song.created_at %></h6>
-      <% end %>
+   
+  <% if !@song.url.nil? %>
+    <p><a href="<%= @song.url %>"><%= @song.url %></a></p>
   <% end %>
-</div>
 
-<hr/>
-<a href="/songs">Back to All Songs</a>
+
+  <div class="container">
+    <% if !@songs_from_user.empty? %>
+      <h4>Other songs from this artist</h4>
+        <% @songs_from_user.each do |song| %>
+          <p><%= song.title %></p>
+          <% if !song.url.nil? %>
+            <p><a href="<%= song.url %>"><%= song.url %></a></p>
+          <% end %>
+          <h6>Posted: <%= song.created_at %></h6>
+        <% end %>
+    <% end %>
+  </div>
+
+<div class="container">
+  <hr/>
+  <a href="/songs">Back to All Songs</a>
+</div>
