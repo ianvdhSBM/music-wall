@@ -13,6 +13,23 @@ end
 get '/songs' do
   @songs = Song.all.joins('LEFT JOIN upvotes ON (songs.id = upvotes.song_id)').group("songs.id").order("count(upvotes.song_id) desc")
   @users = User.all
+  @songs.each do |song|
+    puts "#{song.title} by #{song.author}"
+
+    puts "Total upvotes: #{song.upvotes.count}"
+    puts song.url 
+    puts "#{song.created_at} by #{song.user.username}"
+    if song.reviews
+      puts "Latest song review"
+      post = song.reviews.last
+    end
+    
+    # already_reviewed = song.reviews.where(user_id: current_user.id)
+    # binding.pry
+    # if already_reviewed.length > 0 
+
+    # end
+  end
   erb :'songs/index'
 end
 
@@ -100,8 +117,18 @@ post '/songs/upvote' do
   end
 end
 
-
-
-
+post '/songs/review' do
+  if current_user
+    @review = Review.new(
+      song_id: params[:song_id],
+      user_id: current_user.id,
+      content: params[:content]
+      )
+    @review.save
+    redirect '/songs'
+  else
+    redirect '/users/login'
+  end
+end
 
 
