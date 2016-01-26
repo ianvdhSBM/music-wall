@@ -3,7 +3,7 @@
     <div class="song">
       <h3>
       <form method="post" action="/songs/upvote">
-        <strong><%= song.title %></strong> by <a href="/songs/<%= song.id %>" name="song.id"><%= song.author %></a>
+        <a href="/songs/<%= song.id %>" name="song.id"><%= song.title %> by <%= song.author %></a>
         <input type="hidden" name="song_id" value="<%= song.id %>">
         <input class="btn btn-default" type="submit" value="Upvote!">
       </form>
@@ -17,7 +17,7 @@
         <div>
           <h4>Latest song review</h4>
           <% post = song.reviews.last %>
-          <p>"<%= post.content %>" by <%= post.user.username %> at <%= post.created_at %></p>
+          <p>Rated: <%= post.rating%>, "<%= post.content %>" by <%= post.user.username %> at <%= post.created_at %></p>
         </div>
       <% end %>
       
@@ -29,7 +29,8 @@
 
       <% if already_reviewed.length > 0 %>
         <h4>You have already reviewed this song.</h4>
-        <p> Your review: <em><%= already_reviewed.first.content %></em></p>
+        <p>Your review: <em><%= already_reviewed.first.content %></em></p>
+        <p>Rating: <%= already_reviewed.first.rating %></p> 
         <form method="post" action="/songs/review/delete">
           <input type="hidden" name ="id" value="<%= already_reviewed.first.id %>">
           <input class="btn btn-default" type="submit" value="Delete review?">
@@ -40,6 +41,16 @@
         <form method="post" action="/songs/review">
           <div class="form-group">
             <input type="hidden" name="song_id" value="<%= song.id %>">
+              <div class="dropdown">  
+                Rating:
+                <select name="rating">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
             <input type="text"class="form-control" name="content" placeholder="Write your own review">
           </div>
           <input class="btn btn-default" type="submit" value="Submit review">

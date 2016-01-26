@@ -122,6 +122,7 @@ post '/songs/review' do
     @review = Review.new(
       song_id: params[:song_id],
       user_id: current_user.id,
+      rating:  params[:rating],
       content: params[:content]
     )
     @review.save

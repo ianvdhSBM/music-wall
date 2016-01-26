@@ -1,5 +1,5 @@
 <div class="container">
-  <% if !current_user.songs.nil? %>
+  <% if !current_user.songs.empty? %>
     <h4>All songs posted by: <%= current_user.username %> </h4>
     <% current_user.songs.each do |song| %>
       <div>
@@ -7,6 +7,7 @@
         <h4><a href="<%= song.url %>"><%= song.url %></a></h4>
         <h6>Posted: <%= song.created_at %></h6>
       </div>
+
     <% end %>
   <% else %>
     <h2>You have not posted any songs</h2>
