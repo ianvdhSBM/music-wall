@@ -1,7 +1,7 @@
 <div class="container">
-  <% if !@mysongs.nil? %>
+  <% if !current_user.songs.nil? %>
     <h4>All songs posted by: <%= current_user.username %> </h4>
-    <% @mysongs.each do |song| %>
+    <% current_user.songs.each do |song| %>
       <div>
         <h4><%= song.title %></h4>
         <h4><a href="<%= song.url %>"><%= song.url %></a></h4>

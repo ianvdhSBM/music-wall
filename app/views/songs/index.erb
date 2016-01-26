@@ -3,18 +3,23 @@
     <div class="song">
       <h3>
       <form method="post" action="/songs/upvote">
-        <a href="/songs/<%= song.id %>" name="song.id"><%= song.author %></a>
+        <strong><%= song.title %></strong> by <a href="/songs/<%= song.id %>" name="song.id"><%= song.author %></a>
         <input type="hidden" name="song_id" value="<%= song.id %>">
         <input class="btn btn-default" name="" type="submit" value="Upvote!">
       </form>
       </h3>
-      <p>
-        <strong><%= song.title %></strong>
-      </p>
+      <h6>Total upvotes: <%= song.upvotes.count %> </h6>
       <p><a href="<%= song.url %>"><%= song.url %></a></p>
       <h6>Posted: <%= song.created_at %> by <%= song.user.username %>
       </h6>
-      <h6>Total upvotes: <%= song.upvotes.count %> </h6>
+
+      <form method="post" action="/songs/review">
+        <div class="form-group">
+          <label>Song Review</label>
+          <input type="text"class="form-control" name="review" placeholder="Review">
+        </div>
+        <input class="btn btn-default" name="" type="submit" value="Post your review">
+      </form>
     </div>
   <% end %>
 </div>

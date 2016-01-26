@@ -11,9 +11,8 @@ get '/' do
 end
 
 get '/songs' do
-  @songs = Song.all
+  @songs = Song.all.joins('LEFT JOIN upvotes ON (songs.id = upvotes.song_id)').group("songs.id").order("count(upvotes.song_id) desc")
   @users = User.all
-  # binding.pry
   erb :'songs/index'
 end
 
@@ -37,6 +36,7 @@ post '/users' do
     password: params[:password]
   )
   if @user.save
+    session[:user_id] = @user.id
     redirect '/songs'
   else
     erb :'users/new'
@@ -63,7 +63,6 @@ post '/users/login' do
 end
 
 get '/songs/mysongs' do
-  @mysongs = Song.where(user_id: current_user.id)
   erb :'songs/mysongs'
 end
 
@@ -90,12 +89,15 @@ post '/songs' do
 end
 
 post '/songs/upvote' do
-  @upvote = Upvote.find_or_create_by(
-    song_id: params[:song_id],
-    user_id: current_user.id
-    )
-
-  redirect '/songs'
+  if current_user
+    @upvote = Upvote.find_or_create_by(
+      song_id: params[:song_id],
+      user_id: current_user.id
+      )
+    redirect '/songs'
+  else
+    redirect '/users/login'
+  end
 end
 
 
