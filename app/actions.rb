@@ -13,23 +13,23 @@ end
 get '/songs' do
   @songs = Song.all.joins('LEFT JOIN upvotes ON (songs.id = upvotes.song_id)').group("songs.id").order("count(upvotes.song_id) desc")
   @users = User.all
-  @songs.each do |song|
-    puts "#{song.title} by #{song.author}"
+  # @songs.each do |song|
+  #   puts "#{song.title} by #{song.author}"
 
-    puts "Total upvotes: #{song.upvotes.count}"
-    puts song.url 
-    puts "#{song.created_at} by #{song.user.username}"
-    if song.reviews
-      puts "Latest song review"
-      post = song.reviews.last
-    end
+  #   puts "Total upvotes: #{song.upvotes.count}"
+  #   puts song.url 
+  #   puts "#{song.created_at} by #{song.user.username}"
+  #   if song.reviews
+  #     puts "Latest song review"
+  #     post = song.reviews.last
+  #   end
     
-    # already_reviewed = song.reviews.where(user_id: current_user.id)
-    # binding.pry
-    # if already_reviewed.length > 0 
+  #   # already_reviewed = song.reviews.where(user_id: current_user.id)
+  #   # binding.pry
+  #   # if already_reviewed.length > 0 
 
-    # end
-  end
+  #   # end
+  # end
   erb :'songs/index'
 end
 
@@ -96,7 +96,7 @@ post '/songs' do
     url: params[:url],
     created_at: params[:created_at],
     updated_at: params[:updated_at]
-    )
+  )
   @song.user_id = current_user.id
   if @song.save
     redirect '/songs'
@@ -110,7 +110,7 @@ post '/songs/upvote' do
     @upvote = Upvote.find_or_create_by(
       song_id: params[:song_id],
       user_id: current_user.id
-      )
+    )
     redirect '/songs'
   else
     redirect '/users/login'
@@ -123,12 +123,22 @@ post '/songs/review' do
       song_id: params[:song_id],
       user_id: current_user.id,
       content: params[:content]
-      )
+    )
     @review.save
     redirect '/songs'
   else
     redirect '/users/login'
   end
 end
+
+post '/songs/review/delete' do
+  Review.delete(params[:id])
+  redirect '/songs'
+end
+
+
+
+
+
 
 

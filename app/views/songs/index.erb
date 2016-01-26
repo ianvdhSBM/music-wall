@@ -20,6 +20,7 @@
           <p>"<%= post.content %>" by <%= post.user.username %> at <%= post.created_at %></p>
         </div>
       <% end %>
+      
       <% if current_user.nil? %>
         <% already_reviewed = [] %>
       <% else %>
@@ -29,7 +30,13 @@
       <% if already_reviewed.length > 0 %>
         <h4>You have already reviewed this song.</h4>
         <p> Your review: <em><%= already_reviewed.first.content %></em></p>
+        <form method="post" action="/songs/review/delete">
+          <input type="hidden" name ="id" value="<%= already_reviewed.first.id %>">
+          <input class="btn btn-default" type="submit" value="Delete review?">
+        </form>
+
       <% else %>
+
         <form method="post" action="/songs/review">
           <div class="form-group">
             <input type="hidden" name="song_id" value="<%= song.id %>">
@@ -40,4 +47,5 @@
       <% end %>
     </div>
   <% end %>
+
 </div>
