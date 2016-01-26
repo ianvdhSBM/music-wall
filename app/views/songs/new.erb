@@ -1,4 +1,3 @@
-
 <div class="container"> 
   <h1>Post a new song</h1>
   <hr/>
@@ -18,15 +17,15 @@
 <div class="container"> 
   <form method="post" action="/songs">
     <div class="form-group">
-      <label>Author</label>
-      <input type="text" class="form-control" name="author" value="<%= @song.author %>" placeholder="Author">
+      <label>Artist</label>
+      <input type="text" class="form-control" name="author" value="<%= @song.author %>" placeholder="Artist">
     </div>
     <div class="form-group">
-      <label>Title</label>
+      <label>Song Title</label>
       <input type="text" class="form-control" name="title" value="<%= @song.title %>" placeholder="Song Title">
     </div>
-    <div class="form-group" >
-      <label>Link:</label>
+    <div class="form-group">
+      <label>Link</label>
       <input type="text" class="form-control" name="url" value="<%= @song.url %>" placeholder="website url">
     </div>
     <div>

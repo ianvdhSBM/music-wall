@@ -30,15 +30,26 @@
   <title></title>
 </head>
 <body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-      </button>
-      <a class="navbar-brand" href="/songs/new">Post a Song</a>
+<div class="contrainer">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+<!--         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        </button> -->
+        <a class="navbar-brand" href="/songs">Home</a>
+        <a class="navbar-brand" href="/songs/new">Post Song</a>
+        <% if !current_user.nil? %>
+          <a class="navbar-brand" href="/songs/mysongs"><strong>Hi, <%= current_user.username %></strong></a>
+          <a class="navbar-brand" href="/users/logout">Logout</a>
+        <% else %>
+          <a class="navbar-brand" href="/users/new">Create New User</a>
+          <a class="navbar-brand" href="/users/login">Sign In</a>
+        <% end %>
+      </div>
     </div>
-  </div>  
+  </nav>
+</div>    
   <%= yield %>
 </body>
 </html>

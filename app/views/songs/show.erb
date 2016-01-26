@@ -1,23 +1,26 @@
-
 <div class="container">
-  <h1>Author: <%= @song.author %></h1>
+  
+  <h6>Posted: <%= @song.created_at %>
+    <% if !@song.user_id.nil? %>
+      <% user = User.find(@song.user_id) %>
+      by <%= user.username %>
+    <% end %>
+  </h6>
 
-  <h6><%= @song.created_at %></h6>
+  <h3>Artist: <%= @song.author %></h1>
   
   <h4>
     <%= @song.title %> 
   </h4>
-
    
   <% if !@song.url.nil? %>
     <p><a href="<%= @song.url %>"><%= @song.url %></a></p>
   <% end %>
 
-
   <div class="container">
-    <% if !@songs_from_user.empty? %>
+    <% if !@songs_from_artist.empty? %>
       <h4>Other songs from this artist</h4>
-        <% @songs_from_user.each do |song| %>
+        <% @songs_from_artist.each do |song| %>
           <p><%= song.title %></p>
           <% if !song.url.nil? %>
             <p><a href="<%= song.url %>"><%= song.url %></a></p>
