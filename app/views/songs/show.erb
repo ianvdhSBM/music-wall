@@ -1,36 +1,99 @@
 <div class="container">
   
-  <h6>Posted: <%= @song.created_at %>
-    <% if !@song.user_id.nil? %>
-      <% user = User.find(@song.user_id) %>
-      by <%= user.username %>
-    <% end %>
-  </h6>
+  <h6>Posted: <%= @song.created_at %> by <%= @song.user.username %></h6>
 
-  <h3>Artist: <%= @song.author %></h1>
+  <h3>Artist: <%= @song.author %></h3>
   
   <h4>
     <%= @song.title %> 
   </h4>
-   
-  <% if !@song.url.nil? %>
-    <p><a href="<%= @song.url %>"><%= @song.url %></a></p>
-  <% end %>
+
+  <p><a href="<%= @song.url %>"><%= @song.url %></a></p>
+  
+  <h6>Total upvotes: <%= @song.upvotes.count %> </h6>
+
+  <% if current_user.nil? %>
+        <% already_reviewed = [] %>
+      <% else %>
+        <% already_reviewed = @song.reviews.where(user_id: current_user.id) %>
+      <% end %>
+
+      <% if already_reviewed.length > 0 %>
+        <h4>You have already reviewed this song.</h4>
+        <p>Your review: <em><%= already_reviewed.first.content %></em></p>
+        <p>Rating: <%= already_reviewed.first.rating %></p> 
+        <form method="post" action="/songs/:id/review/delete">
+          <input type="hidden" name ="id" value="<%= already_reviewed.first.id %>">
+          <input class="btn btn-default" type="submit" value="Delete review?">
+        </form>
+
+      <% else %>
+
+        <form method="post" action="/songs/review">
+          <div class="form-group">
+            <input type="hidden" name="song_id" value="<%= @song.id %>">
+              <div class="dropdown">  
+                Rating:
+                <select name="rating">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <br/>
+            <input type="text"class="form-control" name="content" placeholder="Write your own review">
+          </div>
+          <input class="btn btn-default" type="submit" value="Submit review">
+        </form>
+      <% end %>
+
+    </div>
+    <br/>
 
   <div class="container">
-    <% if !@songs_from_artist.empty? %>
-      <h4>Other songs from this artist</h4>
-        <% @songs_from_artist.each do |song| %>
-          <p><%= song.title %></p>
-          <% if !song.url.nil? %>
-            <p><a href="<%= song.url %>"><%= song.url %></a></p>
-          <% end %>
-          <h6>Posted: <%= song.created_at %></h6>
-        <% end %>
+    <% @song.reviews.each do |review| %>
+      <div>
+        <strong><%= review.user.username %></strong> rated this song <%= review.rating%>/5<br/>
+        <em>"<%= review.content %>"</em><br/>
+        Posted at <%= review.created_at %>
+      </div><br/>
     <% end %>
-  </div>
+    <br/>
+
+    <div class="container">
+      <% if !@songs_from_artist.empty? %>
+        <h4>Other songs from this artist</h4>
+          <% @songs_from_artist.each do |song| %>
+            <p><a href="/songs/<%= song.id %>" name="song.id"><%= song.title %></a></p>
+            <% if !song.url.nil? %>
+              <p><a href="<%= song.url %>"><%= song.url %></a></p>
+            <% end %>
+            <h6>Posted: <%= song.created_at %></h6>
+            <% song.reviews.each do |review| %>
+              <div>
+                <strong><%= review.user.username %></strong> rated this song <%= review.rating%>/5<br/>
+                <em>"<%= review.content %>"</em><br/>
+                Posted at <%= review.created_at %>
+              </div><br/>
+            <% end %>
+            <br/>
+
+          <% end %>
+          
+      <% end %>
+    </div>
+  </div>  
 
 <div class="container">
   <hr/>
   <a href="/songs">Back to All Songs</a>
 </div>
+<br/>
+<br/>
+
+
+
+
+
