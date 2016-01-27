@@ -1,6 +1,6 @@
 <div class="container">
   <% @songs.each do |song| %>
-    <div class="song">
+    <div>
       <h3>
         <a href="/songs/<%= song.id %>" name="song.id"><%= song.title %> by <%= song.author %></a>
         <form method="post" action="/songs/upvote">
@@ -40,19 +40,21 @@
 
         <form method="post" action="/songs/review">
           <div class="form-group">
-            <input type="hidden" name="song_id" value="<%= song.id %>">
-              <div class="dropdown">  
-                Rating:
-                <select name="rating">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
-              </div>
-              <br/>
-            <input type="text"class="form-control" name="content" placeholder="Write your own review">
+            
+            <div class="dropdown">  
+              Rating:
+              <select class="browser-default" name="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <br/>
+
+            <input type="hidden" name="song_id" value="<%= song.id %>">  
+            <input type="text" class="form-control" name="content" placeholder="Write your own review">
           </div>
           <input class="btn btn-default" type="submit" value="Submit review">
         </form>
