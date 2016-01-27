@@ -2,8 +2,8 @@
   <% @songs.each do |song| %>
     <div class="song">
       <h3>
-      <form method="post" action="/songs/upvote">
         <a href="/songs/<%= song.id %>" name="song.id"><%= song.title %> by <%= song.author %></a>
+        <form method="post" action="/songs/upvote">
         <input type="hidden" name="song_id" value="<%= song.id %>">
         <input class="btn btn-default" type="submit" value="Upvote!">
       </form>
@@ -57,6 +57,7 @@
           <input class="btn btn-default" type="submit" value="Submit review">
         </form>
       <% end %>
+    <br/><br/>
     </div>
   <% end %>
 
