@@ -1,10 +1,17 @@
-Sinatra
-=============
+## Music Wall
 
-Brought to you by Lighthouse Labs
+### Lighthouse Labs - Week 4 project
 
-## Getting Started
+Our first Sinatra-based app.
 
-1. `bundle install`
-2. `shotgun -p 3000 -o 0.0.0.0`
-3. Visit `http://localhost:3000/` in your browser
+I learned how to:
+
+- implement **users** and remember them with **sessions**
+
+- allow users to have **profile pages** that list all of their songs and reviews
+
+- implement a **one-to-many** database for list all users or all songs and their reviews
+
+- use a (rudimentary) **Upvote system**
+
+- add **Materialize CSS** properties
